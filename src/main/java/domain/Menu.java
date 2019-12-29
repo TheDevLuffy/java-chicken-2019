@@ -2,6 +2,8 @@ package domain;
 
 import java.util.Objects;
 
+import static domain.Category.CHICKEN;
+
 public class Menu {
     private final int number;
     private final String name;
@@ -17,6 +19,14 @@ public class Menu {
 
     public boolean isSameNumber(int number) {
         return this.number == number;
+    }
+
+    public boolean isChicken() {
+        return category.equals(CHICKEN);
+    }
+
+    public Integer totalPrice(final Integer counts) {
+        return price * counts;
     }
 
     @Override
