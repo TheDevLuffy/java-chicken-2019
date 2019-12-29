@@ -1,10 +1,8 @@
 package domain;
 
-import domain.exception.AlreadyOccupiedTableException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TableTest {
 
@@ -12,7 +10,6 @@ class TableTest {
     void initTable() {
         Table table = new Table(1);
 
-        table.occupiedByGuest();
         table.orderMenu(MenuRepository.findByMenuNumber(1), 1);
 
         table.initTable();
@@ -24,21 +21,6 @@ class TableTest {
     void checkTabledOccupied() {
         Table table = new Table(1);
         assertThat(table.isOccupied()).isEqualTo(false);
-    }
-
-    @Test
-    void changeTableOccupiedStatusWhenFalse() {
-        Table table = new Table(1);
-        table.occupiedByGuest();
-        assertThat(table.isOccupied()).isEqualTo(true);
-    }
-
-    @Test
-    void changeTableOccupiedWhenAlreadyOccupied() {
-        Table table = new Table(1);
-        table.occupiedByGuest();
-
-        assertThrows(AlreadyOccupiedTableException.class, table::occupiedByGuest);
     }
 
     @Test
@@ -58,5 +40,42 @@ class TableTest {
         table.orderMenu(MenuRepository.findByMenuNumber(1), 4);
 
         assertThat(table.getMenuCount(MenuRepository.findByMenuNumber(1))).isEqualTo(5);
+    }
+
+    @Test
+    void countSameChickens() {
+        Table table = new Table(2);
+
+        table.orderMenu(MenuRepository.findByMenuNumber(1), 10);
+
+        assertThat(table.countChickens()).isEqualTo(10);
+    }
+
+    @Test
+    void countDifferentChickens() {
+        Table table = new Table(2);
+
+        table.orderMenu(MenuRepository.findByMenuNumber(1), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(1), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(2), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(3), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(4), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(2), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(3), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(4), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(5), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(6), 1);
+
+        assertThat(table.countChickens()).isEqualTo(10);
+    }
+
+    @Test
+    void countDifferentChickens2() {
+        Table table = new Table(2);
+
+        table.orderMenu(MenuRepository.findByMenuNumber(1), 1);
+        table.orderMenu(MenuRepository.findByMenuNumber(21), 1);
+
+        assertThat(table.countChickens()).isEqualTo(1);
     }
 }

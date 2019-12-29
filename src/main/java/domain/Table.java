@@ -1,9 +1,8 @@
 package domain;
 
-import domain.exception.AlreadyOccupiedTableException;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Table {
     private final int number;
@@ -24,18 +23,18 @@ public class Table {
         return this.occupied;
     }
 
-    public void occupiedByGuest() {
-        if (this.occupied) {
-            throw new AlreadyOccupiedTableException("이미 손님이 있는 테이블 입니다.");
-        }
-        this.occupied = true;
-    }
-
     public Integer orderMenu(final Menu menu, final Integer count) {
+        occupiedByGuest();
         if (orders.containsKey(menu)) {
             return countAfterPut(menu, count + orders.get(menu));
         }
         return countAfterPut(menu, count);
+    }
+
+    private void occupiedByGuest() {
+        if (!this.occupied) {
+            this.occupied = true;
+        }
     }
 
     private Integer countAfterPut(final Menu menu, final Integer count) {
@@ -45,6 +44,18 @@ public class Table {
 
     public Integer getMenuCount(final Menu menu) {
         return orders.get(menu);
+    }
+
+    public int countChickens() {
+        return orders.keySet()
+                .stream()
+                .filter(Menu::isChicken)
+                .map(this::getMenuCount)
+                .reduce(0, Integer::sum);
+    }
+
+    public Set<Menu> totalOrders() {
+        return orders.keySet();
     }
 
     @Override
