@@ -66,8 +66,8 @@
 2. Table
 - [x] Table 에 손님이 있는지 없는지 확인
     - [ ] 손님이 있으면 OutputView 의 BOTTOM_LINE 에 `₩` 로 표시
-- [ ] Table 의 주문 내역을 저장할 수 있어야 함 (``Menu`` 의 ``number`` 를 이용한다.)
-- [ ] Table 을 찾을 수 있는 메서드가 필요
+- [x] Table 의 주문 내역을 저장할 수 있어야 함 (``Menu`` 의 ``number`` 를 이용한다.)
+- [x] Table 을 찾을 수 있는 메서드가 필요
 
 3. 결제하기
 - [ ] Table 에 손님이 없으면 불가능함
