@@ -1,21 +1,20 @@
-import domain.Menu;
-import domain.MenuRepository;
-import domain.Table;
-import domain.TableRepository;
-import view.InputView;
-import view.OutputView;
+/**
+ * Copyright (c) 2019 Seungwan Park,
+ * All rights reserved.
+ */
 
-import java.util.List;
+import controller.PosController;
 
+/**
+ * @author Seungwan Park, github.com/toneyparky
+ * @version 1.0
+ * @apiNote 치킨집 포스기를 시작하는 클래스입니다.
+ * @since : 2019.12.23 월요일
+ */
 public class Application {
     // TODO 구현 진행
     public static void main(String[] args) {
-        final List<Table> tables = TableRepository.tables();
-        OutputView.printTables(tables);
-
-        final int tableNumber = InputView.inputTableNumber();
-
-        final List<Menu> menus = MenuRepository.menus();
-        OutputView.printMenus(menus);
+        PosController posController = new PosController();
+        posController.posController();
     }
 }

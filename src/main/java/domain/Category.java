@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2019 Seungwan Park,
+ * All rights reserved.
+ */
 package domain;
 
 public enum Category {
@@ -13,5 +17,9 @@ public enum Category {
     @Override
     public String toString() {
         return "[" + name + "]";
+    }
+
+    public String getName() {
+        return name;
     }
 }
