@@ -1,5 +1,7 @@
 package domain;
 
+import domain.exception.NotFoundMenuException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,5 +22,13 @@ public class MenuRepository {
 
     public static List<Menu> menus() {
         return Collections.unmodifiableList(menus);
+    }
+
+    public static Menu findByMenuNumber(final int number) {
+        return menus().stream()
+                .filter(menu -> menu.isSameNumber(number))
+                .findFirst()
+                .orElseThrow(() ->
+                        new NotFoundMenuException("존재하지 않는 메뉴입니다."));
     }
 }
